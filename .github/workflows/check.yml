@@ -19,7 +19,7 @@ jobs:
         rust:
           - stable
           - beta
-          - "1.63" # MSRV of us + dependencies
+          - "1.65" # MSRV of us + dependencies
         include:
           - os: macos-latest
             rust: stable
