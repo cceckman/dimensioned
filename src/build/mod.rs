@@ -86,7 +86,6 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
         writeln!(f, "Name | Constant | Value | Unit | Dimension")?;
         writeln!(f, "---|---|---|---|---")?;
         for b in &self.base {
-            let mut newline = false;
             for c in self.constants.iter().filter(|c| c.unit == b.name) {
                 writeln!(
                     f,
@@ -97,16 +96,10 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
                     c.unit,
                     b.dim
                 )?;
-
-                newline = true;
-            }
-            if newline {
-                writeln!(f, "|")?;
             }
         }
 
         for d in &self.derived {
-            let mut newline = false;
             for c in self.constants.iter().filter(|c| c.unit == d.name) {
                 writeln!(
                     f,
@@ -117,10 +110,6 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
                     c.unit,
                     d.dim
                 )?;
-                newline = true;
-            }
-            if newline {
-                writeln!(f, "|")?;
             }
         }
 
