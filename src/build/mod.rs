@@ -582,11 +582,8 @@ mod constant_conversion {{
             .chain(s.constants.iter().map(|c| c.constant))
             .collect();
         for s2 in systems.iter().filter(|s2| s2.name != s.name) {
-            if s.from.iter().any(|&f| f == s2.name) && s2.from.iter().any(|&f| f == s.name) {
-                for c in constants1
-                    .iter()
-                    .filter(|&c| !s.refl_blacklist.iter().any(|b| c == b))
-                {
+            if s.from.contains(&s2.name) && s2.from.contains(&s.name) {
+                for c in constants1.iter().filter(|&c| !s.refl_blacklist.contains(c)) {
                     write!(f, "
     #[test]
     #[allow(non_snake_case)]
