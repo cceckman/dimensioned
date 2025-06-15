@@ -17,6 +17,7 @@ addition, it aims to be as easy to use as possible, hopefully making things easi
 by avoiding bugs but also by making it clear what units things are.
 
 Never again should you need to specify units in a comment!"""
+  rust-version = "1.60" # Our own MSRV; dependencies may be more constrained
 
 [lib]
   name = "dimensioned"
