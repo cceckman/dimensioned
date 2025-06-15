@@ -75,7 +75,6 @@ where
 ///
 ///     assert_eq!(a.append_front(0), a2);
 /// }
-
 pub trait AppendFront<T> {
     /// The resulting type after performing the append
     type Output;

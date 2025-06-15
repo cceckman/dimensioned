@@ -496,7 +496,6 @@ All of these unit systems were generated using the `make_units!` macro. See its 
 more information.
 
 */
-
 pub mod unit_systems {"#
             .as_bytes(),
     )
