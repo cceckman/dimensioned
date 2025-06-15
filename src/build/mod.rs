@@ -118,6 +118,12 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
 }
 
 impl fmt::Display for System {
+    // As of 1.66, Clippy lints on `"{}", d` instead of `"{d}"`.
+    // However, this behavior is only available as of 1.58-
+    // which postdates the 2021 edition (launched in 1.56).
+    //
+    // Ignore the lint, to maintain a lower minimum supported Rust version.
+    #[allow(clippy::uninlined_format_args)]
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         writeln!(f, "/**\n{}\n", self.doc_prelude)?;
 
