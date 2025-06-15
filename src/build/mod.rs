@@ -140,7 +140,7 @@ pub mod {} {{
         for unit in &self.base {
             let dim = match unit.dim {
                 "" => String::new(),
-                d => format!(", {}", d),
+                d => format!(", {d}"),
             };
             writeln!(
                 f,
@@ -159,7 +159,7 @@ pub mod {} {{
         for unit in &self.derived {
             let dim = match unit.dim {
                 "" => String::new(),
-                d => format!(", {}", d),
+                d => format!(", {d}"),
             };
             writeln!(
                 f,
@@ -407,7 +407,7 @@ fn make_system(s: &System) {
     let dest = std::path::Path::new(&out_dir).join(format!("{}.rs", s.module));
     let mut f = std::fs::File::create(&dest).unwrap();
 
-    write!(f, "{}", s).unwrap();
+    write!(f, "{s}").unwrap();
 }
 
 mod cgs;
