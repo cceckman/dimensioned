@@ -86,7 +86,6 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
         writeln!(f, "Name | Constant | Value | Unit | Dimension")?;
         writeln!(f, "---|---|---|---|---")?;
         for b in &self.base {
-            let mut newline = false;
             for c in self.constants.iter().filter(|c| c.unit == b.name) {
                 writeln!(
                     f,
@@ -97,16 +96,10 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
                     c.unit,
                     b.dim
                 )?;
-
-                newline = true;
-            }
-            if newline {
-                writeln!(f, "|")?;
             }
         }
 
         for d in &self.derived {
-            let mut newline = false;
             for c in self.constants.iter().filter(|c| c.unit == d.name) {
                 writeln!(
                     f,
@@ -117,10 +110,6 @@ Following, we list all of the [base units](#base-units), [derived units](#derive
                     c.unit,
                     d.dim
                 )?;
-                newline = true;
-            }
-            if newline {
-                writeln!(f, "|")?;
             }
         }
 
@@ -151,7 +140,7 @@ pub mod {} {{
         for unit in &self.base {
             let dim = match unit.dim {
                 "" => String::new(),
-                d => format!(", {}", d),
+                d => format!(", {d}"),
             };
             writeln!(
                 f,
@@ -170,7 +159,7 @@ pub mod {} {{
         for unit in &self.derived {
             let dim = match unit.dim {
                 "" => String::new(),
-                d => format!(", {}", d),
+                d => format!(", {d}"),
             };
             writeln!(
                 f,
@@ -418,7 +407,7 @@ fn make_system(s: &System) {
     let dest = std::path::Path::new(&out_dir).join(format!("{}.rs", s.module));
     let mut f = std::fs::File::create(&dest).unwrap();
 
-    write!(f, "{}", s).unwrap();
+    write!(f, "{s}").unwrap();
 }
 
 mod cgs;
@@ -507,7 +496,6 @@ All of these unit systems were generated using the `make_units!` macro. See its 
 more information.
 
 */
-
 pub mod unit_systems {"#
             .as_bytes(),
     )
@@ -587,11 +575,8 @@ mod constant_conversion {{
             .chain(s.constants.iter().map(|c| c.constant))
             .collect();
         for s2 in systems.iter().filter(|s2| s2.name != s.name) {
-            if s.from.iter().any(|&f| f == s2.name) && s2.from.iter().any(|&f| f == s.name) {
-                for c in constants1
-                    .iter()
-                    .filter(|&c| !s.refl_blacklist.iter().any(|b| c == b))
-                {
+            if s.from.contains(&s2.name) && s2.from.contains(&s.name) {
+                for c in constants1.iter().filter(|&c| !s.refl_blacklist.contains(c)) {
                     write!(f, "
     #[test]
     #[allow(non_snake_case)]

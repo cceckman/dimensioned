@@ -172,8 +172,8 @@ starts seeming intuitive fairly quickly.
 
 In addition to creating a type, type aliases, and constants, this macro implements many traits for
 your unit system, including (but not limited to) the traits in the `traits` module and arithmetic operations.
-*/
 
+*/
 #[macro_export]
 macro_rules! make_units {
     ($System:ident;
